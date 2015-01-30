@@ -27,11 +27,6 @@ Neely Albero / Maelys Renaud
 Murray Balboni / Kerri Varley
 */
 
-import java.util.Scanner;
-import java.util.TreeMap; 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Set; 
 import java.util.*;
 
 public class marriageProblem
@@ -39,32 +34,61 @@ public class marriageProblem
 	public static void main(String[] args)
 	{
 		Scanner scan = new Scanner(System.in);
-		TreeMap <String, List<String>> proposers_map = new TreeMap<String, List<String>>();
-		ArrayList <String> matches = new ArrayList<String>();
+		Map <String, List<String>> proposers_map = new HashMap<String, List<String>>();
+		Set <String> matches = new TreeSet<String>();
+		ArrayList <String> men = new ArrayList<String>();
 
 		String line = scan.nextLine();
 
 		while(line.length() != 0)
-		{
+		{	
 			String[] raw_arr = line.split(":");
 			String[] reviewers = raw_arr[1].split(",");
 
-			System.out.println(raw_arr[0] + " "+ reviewers[0]);
+			//remove whitespace
+			for(int i=0; i<reviewers.length; i++)
+				reviewers[i] = reviewers[i].trim();
 
 			proposers_map.put(raw_arr[0], Arrays.asList(reviewers));
+			men.add(raw_arr[0]);
 			line = scan.nextLine();
 		}
 
+		//remove everyone thats not a man
+		while(men.size() != proposers_map.size()/2)
+			men.remove(men.size()-1);
+
+		//prepare map for iteration by creating entry set
 		Set s = proposers_map.entrySet();
 
-		//loop through map to see if any 1st proposal matches 
+		//iterate through map to see if any 1st proposal matches 
 		Iterator it = s.iterator();
 
+		int count = 0;
+		//only iterate through half the list
 		while(it.hasNext())
 		{
 			Map.Entry me = (Map.Entry)it.next();
-			System.out.println(me.getKey());
-			System.out.println(me.getValue());
+
+			List names = (List)me.getValue();
+			String first = (String)names.get(0);
+
+			//match equals - if they names and keys match 
+			for(int j=0; j<names.size(); j++)
+			{
+				if(proposers_map.get(names.get(j)).get(j).equals(me.getKey()) && men.contains(me.getKey()))
+				{
+					//only add matches if they start with a mans name 
+					matches.add(me.getKey() + " / " + names.get(j));
+					break;
+				}
+			}
 		}
+
+		//print matches
+		Iterator i = matches.iterator();
+		while(i.hasNext())
+			System.out.println(i.next());
+		
 	}
 }
