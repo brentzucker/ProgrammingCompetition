@@ -30,13 +30,17 @@ Murray Balboni / Kerri Varley
 import java.util.Scanner;
 import java.util.TreeMap; 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Set; 
+import java.util.*;
 
 public class marriageProblem
 {
 	public static void main(String[] args)
 	{
 		Scanner scan = new Scanner(System.in);
-		TreeMap <String, String[]> proposers_map = new TreeMap<String, String[]>();
+		TreeMap <String, List<String>> proposers_map = new TreeMap<String, List<String>>();
+		ArrayList <String> matches = new ArrayList<String>();
 
 		String line = scan.nextLine();
 
@@ -47,8 +51,20 @@ public class marriageProblem
 
 			System.out.println(raw_arr[0] + " "+ reviewers[0]);
 
-			proposers_map.put(raw_arr[0], reviewers);
+			proposers_map.put(raw_arr[0], Arrays.asList(reviewers));
 			line = scan.nextLine();
+		}
+
+		Set s = proposers_map.entrySet();
+
+		//loop through map to see if any 1st proposal matches 
+		Iterator it = s.iterator();
+
+		while(it.hasNext())
+		{
+			Map.Entry me = (Map.Entry)it.next();
+			System.out.println(me.getKey());
+			System.out.println(me.getValue());
 		}
 	}
 }
