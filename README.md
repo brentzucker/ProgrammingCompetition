@@ -112,3 +112,31 @@ Sample Output
 79 97 167 191 193
 3
 32717 65413 65521
+
+#Problem4 (powerfulNumber.java)
+Powerful Numbers (prob1 from http://eagle.cs.mercer.edu/MUSpringContest/MUSpring2014.pdf)
+The Problem
+In the July 2006 edition of the Mathematical Gazette, Note 90.32 gives the following definition for
+powerful number. The n­digit positive integer N = an an­1 … a1
+is defined as a powerful number if
+f(N) = N, where f(N) = an + a .
+2
+n−1 + … + a
+n
+1
+So given a number N, one may wish to determine if it is powerful.
+Input
+Each line will contain a decimal number N whose length is at most 100 digits and its first digit will
+be nonzero. Input will be terminated by a line containing only a 0. It is not to be processed.
+Output
+For each number, print it followed by the string “is/is not a powerful number.” Depending on
+whether it is or is not a powerful number.
+Sample Input
+5
+89
+98
+0
+Sample Output
+5 is a powerful number.
+89 is a powerful number.
+98 is not a powerful number.
