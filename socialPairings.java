@@ -54,15 +54,13 @@ public class socialPairings
 		TreeMap<String, Integer> person_count = new TreeMap<String, Integer>();
 		TreeSet<String> choice_set = new TreeSet<String>();
 
-		int choices = 7;
+		int choices = 4;
 		String zeros = "";
 
 		for(int i=0; i<choices; i++)
 			zeros += "0";
 
 		df = new DecimalFormat(zeros);
-
-		//System.out.println(df.format(1));
 
 		int num_of_possibilities = (int)Math.pow(2, choices);
 
@@ -74,7 +72,7 @@ public class socialPairings
 				person_count.put(df.format(Integer.parseInt(Integer.toBinaryString(i))), 0);
 			}
 
-			//generate possible choices (only 2 per choice)
+			//generate possible choices (only 2 persons per choice)
 			if(Integer.bitCount(i) == 2)
 			{
 				String binary_string = Integer.toBinaryString(i);
@@ -92,7 +90,10 @@ public class socialPairings
 			count_how_many_choices *= choice_set.size();
 
 			String choice = validChoice(person_count, choice_set);
-			choice_set.remove(choice);
+			
+			if(choice_set.size() > 1)
+				choice_set.remove(choice);
+			
 			System.out.println("Choice: "+choice);
 
 			//count how many times that person has been chosen
@@ -105,9 +106,6 @@ public class socialPairings
 		}
 
 		System.out.println("Number of choices "+count_how_many_choices);
-
-		System.out.println(person_count);
-		System.out.println(choice_set);
 	}
 
 	public static String validChoice(TreeMap<String, Integer> person_count, TreeSet<String> choice_set)
@@ -117,6 +115,7 @@ public class socialPairings
 		if(person_count.size() > 0)
 		{
 			//if 2 unique 0's
+			/*
 			if((!getFirstKeyByValue(0, person_count).equals("") && !getLastKeyByValue(0, person_count).equals("")) && !getFirstKeyByValue(0, person_count).equals(getLastKeyByValue(0, person_count)))
 			{
 				String index1 = getFirstKeyByValue(0, person_count);
@@ -124,7 +123,9 @@ public class socialPairings
 
 				return selectChoice(index1.indexOf('1'), index2.indexOf('1'), choice_set);
 			}
-			else if(!getFirstKeyByValue(0, person_count).equals("")) //1 zero
+			else 
+			*/
+			if(!getFirstKeyByValue(0, person_count).equals("")) //1 zero
 			{
 				String index1 = getFirstKeyByValue(0, person_count);
 				return selectChoice(index1.indexOf('1'), choice_set);
